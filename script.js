@@ -7,19 +7,19 @@ quiz.style.display = "none"
 
 var questionsAndAnswers = [
     {
-        question: "What color is the sky?",
-        choices: ["Red", "Blue", "Green", "Purple"],
-        correct: "Blue"
+        question: "What does 'DOM' stand for?",
+        choices: ["Document Oriented Model", " Designated Object Model", "Document Object Model", "Document Orbital Model"],
+        correct: "Document Object Model"
     },
     {
-        question: "What was the first programming lauguage? ",
-        choices: ["C+", "C++", "Javascirt", "FORTRAN"],
-        correct: "FORTAN"
+        question: "Which HTML element do we use to link a Javascript? ",
+        choices: ["<body>", "<link>", "<html>", "<scirpt>"],
+        correct: "<scirpt>"
     },
     {
-        question: "Whos the father of programming?",
-        choices: ["Elon Musk", "Bill Gates", "Charles Babbage", "Ada Lovelace"],
-        correct: "Charles Babbage"
+        question: "How do you Create a function in javascript?",
+        choices: ["function()", "function = yourfunction()", "function yourfunction()", "function"],
+        correct: "function yourfunction()"
     },
     {
         question: "Who made C++?",
@@ -52,9 +52,9 @@ var questionsAndAnswers = [
         correct: "Haskell"
     },
     {
-        question: "Whats the Color of light?",
-        choices: ["Red", "Blue", "Rainbow", "White"],
-        correct: "White"
+        question: "What is Javascirpt?",
+        choices: ["A Coffee", "A drink", "A Rainbow", "A codeing language"],
+        correct: "A codeing language"
     },
     
 ]
