@@ -1,14 +1,29 @@
-var welcome = document.getElementById("welcome")
-var quiz = document.getElementById("quiz")
-var startBtn = document.getElementById("start")
-var questions = document.getElementById("question")
-var answers = document.getElementById("answers")
-quiz.style.display = "none"
+var welcome = document.getElementById("welcome");
+var quiz = document.getElementById("quiz");
+var startBtn = document.getElementById("start");
+var questions = 0
+var answers = document.getElementById("answers");
+var timer = document.getElementById("timer");
+var highScoreButton = document.getElementById("highScore");
+var wrpper = document.getElementById("content");
+var questionsBox = document.getElementById("questionsBox")
+var questionSpot = document.getElementById("questionSpot")
+var createUl = document.getElementById("choicesUl")
+var opener = document.getElementById("opener")
+var score = 0;
+var timeLeft = 60 * 2;
+var correctAnswerCount = 0;
+var wrongAnswerCount = 0;
+var pauseInterval = 0;
+var substractTime = 10;
+
+
+// quiz.style.display = "none"
 
 var questionsAndAnswers = [
     {
         question: "What does 'DOM' stand for?",
-        choices: ["Document Oriented Model", " Designated Object Model", "Document Object Model", "Document Orbital Model"],
+        choices: ["Document Oriented Model", "Designated Object Model", "Document Object Model", "Document Orbital Model"],
         correct: "Document Object Model"
     },
     {
@@ -56,11 +71,120 @@ var questionsAndAnswers = [
         choices: ["A Coffee", "A drink", "A Rainbow", "A codeing language"],
         correct: "A codeing language"
     },
+
+];
+
+
+timer.addEventListener("click", function () {
+    // welcome.style.display = "none"
+    // quiz.style.display = "block"
+    if (pauseInterval === 0) {
+        pauseInterval = setInterval(function () {
+            timeLeft--;
+            timeLeft.textContent = "Time: " + timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(pauseInterval);
+                timeLeft.textContent = "Time's up!";
+            }
+        }, 1000);
+    }
+    display(questions);
+});
+
+function display(questions) {
+    opener.style.display = "none"
+    questionSpot.innerHTML = "";
+     createUl.innerHTML = "";
+    let userQuestions = questionsAndAnswers[questions].question;
+    var userAnswers = questionsAndAnswers[questions].choices;
+    questionSpot.textContent = userQuestions;
+    console.log(userAnswers)
+    userAnswers.forEach(function (i) {
+        let listItem = document.createElement("li");
+        // console.log(nextQuestion)
+        listItem.textContent = i;
+        createUl.appendChild(listItem)
+        // createUl.append(createUl);
+        listItem.addEventListener("click", (input));
+    })
+
+};
+
+const createDiv = document.createElement("div");
+function input(event) {
+    let element = event.target;
+    if (element.matches("li")) {
+        createDiv.id = "createDiv";
+        if (element.textContent) {
+            score++;
+            createDiv.textContent = "Correct";
+        } else {
+            timeLeft = timeLeft - substractTime;
+            createDiv.textContent = "Wrong"
+        }
+    }
+    questions++;
+    if (questions >= questionsAndAnswers.length) {
+        finish();
+    } else {
+        display(questions);
+    }
+    questionSpot.appendChild(createDiv);
+};
+
+function finish() {
+    questionsBox.innerHTML = "";
+    timeLeft.innerHTML = "";
+    const createH1 = document.createElement("h1");
+    createH1.id = "createH1";
+    createH1.textContent = "Finished!"
+    questionsBox.appendChild(createH1);
+    const createP = document.createElement("p");
+    createP.id = "createP";
+    questionsBox.appendChild(createP);
+    if (timeLeft >= 0) {
+        const createP2 = document.createElement("p");
+        clearInterval(pauseInterval);
+        createP.textContent = "Your score is: " + score
+        questionsBox.appendChild(createP2);
+    }
+ const infoPrompt = document.createElement("label");
+
+    infoPrompt.id = "createLabel";
+    infoPrompt.textContent = "Enter your initials: ";
+    questionsBox.appendChild(infoPrompt);
     
-]
-
-
-startBtn.addEventListener("click", function() {
-    welcome.style.display = "none"
-    quiz.style.display = "block"
-})
+    const userInitials = document.createElement("input");
+    userInitials.type = "text";
+    userInitials.id = "initials";
+    userInitials.textContent = "";
+    questionsBox.appendChild(userInitials);
+    const saveInfo = document.createElement("button");
+    saveInfo.type = "submit";
+    saveInfo.id = "Submit";
+    saveInfo.textContent = "Submit";
+    questionsBox.appendChild(saveInfo);
+    
+    saveInfo.addEventListener("click", function () {
+        var initials = userInitials.value;
+        if (initials === "") {
+            console.log("No value entered!");
+        } else {
+            var finalScore = {
+                initials: initials,
+                score: timeLeft * 2
+            }
+            console.log(finalScore);
+            var allScores = localStorage.getItem("allScores");
+            if (allScores === null) {
+                allScores = [];
+            } else {
+                allScores = JSON.parse(allScores);
+            }
+            allScores.push(finalScore);
+            var newScore = JSON.stringify(allScores);
+            localStorage.setItem("allScores", newScore);
+            window.location.replace("score.html");
+        }
+    }); 
+}
