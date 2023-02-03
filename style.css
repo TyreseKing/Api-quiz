@@ -1,0 +1,115 @@
+body {
+    padding: 2%;
+    font-family: Arial;
+    font-size: 100%;
+}
+
+#content {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    height: 800px;
+}
+textarea {
+    width: 80%;
+    margin: 15px;
+}
+
+#timer{
+    background-color: rgb(177, 60, 192);
+    margin-left: 30%;
+    padding:15px 30px;
+    font-size: 20px;
+    color: white;
+    border: 2px soild black;
+}
+
+#questionBox {
+    text-align: center
+}
+
+#questionsBox ul li {
+    border: 4px solid rgb(177, 60, 192);
+    border-radius: 40px 40px;
+    line-height: 150%;
+    margin: 3%;
+    cursor: pointer;
+}
+button {
+    border-radius: 25px 25px;
+    border: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    cursor: pointer;
+
+}
+
+#timeleft{
+    float: right;
+}
+
+input {
+    margin-bottom: 20px;
+    width: 50%;
+    border: 1px solid rgb(8, 8, 8);
+}
+
+h1 {
+    text-align: center;
+}
+
+li {
+    background-color: rgb(177, 60, 192);
+    margin-top: 10px;
+    padding: 5px 15px;
+    width: 80%;
+    font-size: 18px;
+    color: white;
+}
+
+#createDiv {
+    margin-top: 20px;
+    border-top: 1px solid lightgray;
+}
+
+#Submit {
+    background-color: rgb(177, 60, 192);
+    margin-left: 33%;
+    padding: 15px 32px;
+    font-size: 20px;
+    color: white;
+    border: 2px solid black;
+}
+
+#retake {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(177, 60, 192);
+    font-size: 20px;
+    color: white;
+    top: 30%;
+    left: 5%;
+    width: auto;
+    border: 2px solid black;
+}
+
+#highScore {
+    border: none;
+}
+
+#clear {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(177, 60, 192);
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    top: 30%;
+    right: 5%;
+    border: 2px solid black;
+}

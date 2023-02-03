@@ -1,9 +1,10 @@
 var welcome = document.getElementById("welcome");
 var quiz = document.getElementById("quiz");
 var startBtn = document.getElementById("start");
-var questions = 0
+var questions = 0;
 var answers = document.getElementById("answers");
 var timer = document.getElementById("timer");
+var timeLeft = document.getElementById("timeLeft")
 var highScoreButton = document.getElementById("highScore");
 var wrpper = document.getElementById("content");
 var questionsBox = document.getElementById("questionsBox")
@@ -11,7 +12,7 @@ var questionSpot = document.getElementById("questionSpot")
 var createUl = document.getElementById("choicesUl")
 var opener = document.getElementById("opener")
 var score = 0;
-var timeLeft = 60 * 2;
+var startTime = 60 * 2;
 var correctAnswerCount = 0;
 var wrongAnswerCount = 0;
 var pauseInterval = 0;
@@ -80,10 +81,11 @@ timer.addEventListener("click", function () {
     // quiz.style.display = "block"
     if (pauseInterval === 0) {
         pauseInterval = setInterval(function () {
-            timeLeft--;
-            timeLeft.textContent = "Time: " + timeLeft;
-            if (timeLeft <= 0) {
+            startTime--;
+            timeLeft.textContent = "Time: " + startTime;
+            if (startTime <= 0) {
                 clearInterval(pauseInterval);
+                finish();
                 timeLeft.textContent = "Time's up!";
             }
         }, 1000);
@@ -94,17 +96,17 @@ timer.addEventListener("click", function () {
 function display(questions) {
     opener.style.display = "none"
     questionSpot.innerHTML = "";
-     createUl.innerHTML = "";
-    let userQuestions = questionsAndAnswers[questions].question;
-    var userAnswers = questionsAndAnswers[questions].choices;
-    questionSpot.textContent = userQuestions;
-    console.log(userAnswers)
+    createUl.innerHTML = "";
+    for (var i = 0; i < questionsAndAnswers.length; i++) {
+        let userQuestions = questionsAndAnswers[questions].question;
+        var userAnswers = questionsAndAnswers[questions].choices;
+        questionSpot.textContent = userQuestions;
+    }
     userAnswers.forEach(function (i) {
         let listItem = document.createElement("li");
-        // console.log(nextQuestion)
         listItem.textContent = i;
+        questionSpot.appendChild(createUl)
         createUl.appendChild(listItem)
-        // createUl.append(createUl);
         listItem.addEventListener("click", (input));
     })
 
@@ -115,12 +117,12 @@ function input(event) {
     let element = event.target;
     if (element.matches("li")) {
         createDiv.id = "createDiv";
-        if (element.textContent) {
+        if (element.textContent == questionsAndAnswers[questions].correct) {
             score++;
-            createDiv.textContent = "Correct";
+            createDiv.textContent = " Correct";
         } else {
-            timeLeft = timeLeft - substractTime;
-            createDiv.textContent = "Wrong"
+            startTime = startTime - substractTime;
+            createDiv.textContent = " Wrong" + questionsAndAnswers[questions].correct;
         }
     }
     questions++;
@@ -142,18 +144,18 @@ function finish() {
     const createP = document.createElement("p");
     createP.id = "createP";
     questionsBox.appendChild(createP);
-    if (timeLeft >= 0) {
+    if (startTime >= 0) {
         const createP2 = document.createElement("p");
         clearInterval(pauseInterval);
-        createP.textContent = "Your score is: " + score
+        createP.textContent = "Your score is: " + score + " time left is: " + startTime;
         questionsBox.appendChild(createP2);
     }
- const infoPrompt = document.createElement("label");
+    const infoPrompt = document.createElement("label");
 
     infoPrompt.id = "createLabel";
     infoPrompt.textContent = "Enter your initials: ";
     questionsBox.appendChild(infoPrompt);
-    
+
     const userInitials = document.createElement("input");
     userInitials.type = "text";
     userInitials.id = "initials";
@@ -164,7 +166,7 @@ function finish() {
     saveInfo.id = "Submit";
     saveInfo.textContent = "Submit";
     questionsBox.appendChild(saveInfo);
-    
+
     saveInfo.addEventListener("click", function () {
         var initials = userInitials.value;
         if (initials === "") {
@@ -186,5 +188,5 @@ function finish() {
             localStorage.setItem("allScores", newScore);
             window.location.replace("score.html");
         }
-    }); 
+    });
 }
